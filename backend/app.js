@@ -11,6 +11,7 @@ import { notFoundHandler,errorHandler } from "./middlewares/errorHandler.js"
 import {globalLimiter, authLimiter} from "./middlewares/rateLimiter.js"
 //Router files
 import authRoutes from "./routes/authRoutes.js"
+import parcelRoutes from "./routes/parcelRoutes.js"
 dotenv.config()
 export const app = express()
 
@@ -26,5 +27,6 @@ app.get("/health",(req,res)=>{
     res.status(200).json({status: "ok", message: "Server is healthy"})
 })
 app.use("/api/auth",authRoutes)
+app.use("/api/parcels",parcelRoutes)
 app.use(notFoundHandler)
 app.use(errorHandler)
