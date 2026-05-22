@@ -41,3 +41,16 @@ export const createParcel = async (req, res, next)=> {
         next(error)
     }
 }
+export const getParcelByTrackingId = async (req, res, next) => {
+try {
+const { trackingId } = req.params;
+const parcel = await Parcel.findOne({ trackingId });
+
+if (!parcel) {
+return res.status(404).json({ message: "Parcel not found" });
+}
+res.status(200).json(parcel);
+} catch (error) {
+next(error);
+}
+    }

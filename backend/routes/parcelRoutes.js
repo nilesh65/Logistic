@@ -1,5 +1,5 @@
 import express from "express"
-import { createParcel } from "../controllers/parcelController.js"
+import { createParcel, getParcelByTrackingId } from "../controllers/parcelController.js"
 import { authLimiter } from "../middlewares/rateLimiter.js"
 import { adminOnly, protect } from "../middlewares/authMiddleware.js"
 
@@ -88,4 +88,25 @@ const router = express.Router()
 router.post('/',protect,adminOnly,createParcel)
 
 
+/**
+ * @swagger
+ * /api/parcels/track/{trackingId}:
+ *   get:
+ *     summary: Get a parcel by tracking ID (public)
+ *     tags: [Parcels]
+ *     parameters:
+ *       - in: path
+ *         name: trackingId
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The tracking ID of the parcel
+ *     responses:
+ *       200:
+ *         description: Parcel details with checkpoints
+ *       404:
+ *         description: Parcel not found
+ */
+
+router.get("/track/:trackingId",getParcelByTrackingId)
 export default router
